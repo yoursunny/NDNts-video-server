@@ -1,0 +1,7 @@
+data/
+.env
+node_modules/
+*.out
+package-lock.json
+pnpm-lock.yaml
+profile.data

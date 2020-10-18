@@ -1,0 +1,26 @@
+{
+  "private": true,
+  "scripts": {
+    "lint": "xo --fix",
+    "pnpm-install": "pnpm install --shamefully-hoist"
+  },
+  "dependencies": {
+    "@ndn/cli-common": "https://ndnts-nightly.ndn.today/cli-common.tgz",
+    "@ndn/endpoint": "https://ndnts-nightly.ndn.today/endpoint.tgz",
+    "@ndn/keychain-cli": "https://ndnts-nightly.ndn.today/keychain-cli.tgz",
+    "@ndn/naming-convention1": "https://ndnts-nightly.ndn.today/naming-convention1.tgz",
+    "@ndn/packet": "https://ndnts-nightly.ndn.today/packet.tgz",
+    "@ndn/repo": "https://ndnts-nightly.ndn.today/repo.tgz",
+    "@ndn/segmented-object": "https://ndnts-nightly.ndn.today/segmented-object.tgz",
+    "@ndn/tlv": "https://ndnts-nightly.ndn.today/tlv.tgz",
+    "@strattadb/environment": "^8.0.1",
+    "dotenv": "^8.2.0",
+    "leveldown": "^5.6.0",
+    "m3u8-parser": "^4.4.3",
+    "p-retry": "^4.2.0",
+    "streaming-iterables": "^5.0.3"
+  },
+  "devDependencies": {
+    "@yoursunny/xo-config": "^0.33.0"
+  }
+}
