@@ -1,20 +1,46 @@
 # NDNts-ivoosh-mirror
 
-```shell
-$ npm run pnpm-install
+This program allows establishing a mirror site of [NDN video service](https://github.com/chavoosh/ndn-mongo-fileserver).
+It can follow HLS playlist structure and download all Data packets of a video, and then serve them from a NDNts repo.
 
-$ wget -q https://homecam.ndn.today/profile.data
+## Installation and Usage
 
-$ ./node_modules/.bin/ndntssec gen-key /ndn/edu/neu/%40GUEST/tahaxo6781%40accordmail.net/$(hostname -s)
-/8=ndn/8=edu/8=neu/8=%40GUEST/8=tahaxo6781%40accordmail.net/8=vps8/8=KEY/36=%00%05%B0V%DC%BF%C2%80/8=self/35=%00%00%01t%D2%A7%1A%B6
+You should install this program in an unprivileged account.
 
-$ ./node_modules/.bin/ndntssec ndncert03-client --profile profile.data --challenge nop --key /8=ndn/8=edu/8=neu/8=%40GUEST/8=tahaxo6781%40accordmail.net/8=vps8/8=KEY/36=%00%05%B0V%DC%BF%C2%80
-/8=ndn/8=edu/8=neu/8=%40GUEST/8=tahaxo6781%40accordmail.net/8=vps8/8=KEY/36=%00%05%B0V%DC%BF%C2%80/8=NDNts-Personal-CA/35=%00%00%01t%D2%A9%0F%F2/1=%E1%14%26S%E26%24%A6%C2T%84F%40%F9u%C3ye%C0%DC%7F%86%3DY%A6%91%8EF%AC%C3%A1%80
+1. Install Node.js 14.x and `pnpm`:
 
-$ : 'put the certificate name to NDNTS_KEY in .env'
+   ```bash
+   nvm install 14
+   npm install -g pnpm
+   ```
 
-$ nohup node ./src/fetch.js /ndn/web/video/NDNts_NDNcomm2020/hls/playlist.m3u8
-$ nohup node ./src/fetch.js /ndn/web/video/NDN_P4_NDNcomm_2020/hls/playlist.m3u8
-$ nohup node ./src/fetch.js /ndn/web/video/DV_Routing_NDNcomm2020/hls/playlist.m3u8
-$ nohup node ./src/fetch.js /ndn/web/video/Vertically_Securing_Smart_Grid_NDNcomm2020/hls/playlist.m3u8
+2. Clone this repository, this branch only.
+
+3. Install local dependencies:
+
+   ```bash
+   npm run pnpm-install
+   ```
+
+4. Copy `sample.env` to `.env`.
+
+5. Generate a key and obtain a certificate for prefix registration.
+
+   * You may use `@ndn/keychain-cli` package.
+   * The signing key should be stored in a NDNts KeyChain, not in ndn-cxx KeyChain.
+   * Enter KeyChain location and certificate name in `.env`.
+
+To download a video:
+
+```bash
+node ./src/fetch.js /ndn/web/video/NDNts_NDNcomm2020/hls/playlist.m3u8
 ```
+
+To start the producer:
+
+```bash
+node ./src/serve.js
+```
+
+NDNts repo is based on LevelDB, which is non-thread-safe.
+Thus, you must stop the producer when downloading, and you can only download one video at a time.

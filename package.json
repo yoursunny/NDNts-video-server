@@ -1,4 +1,6 @@
 {
+  "name": "@yoursunny/ivoosh-mirror",
+  "version": "0.0.0",
   "private": true,
   "scripts": {
     "lint": "xo --fix",
@@ -7,7 +9,6 @@
   "dependencies": {
     "@ndn/cli-common": "https://ndnts-nightly.ndn.today/cli-common.tgz",
     "@ndn/endpoint": "https://ndnts-nightly.ndn.today/endpoint.tgz",
-    "@ndn/keychain-cli": "https://ndnts-nightly.ndn.today/keychain-cli.tgz",
     "@ndn/naming-convention1": "https://ndnts-nightly.ndn.today/naming-convention1.tgz",
     "@ndn/packet": "https://ndnts-nightly.ndn.today/packet.tgz",
     "@ndn/repo": "https://ndnts-nightly.ndn.today/repo.tgz",
@@ -21,6 +22,6 @@
     "streaming-iterables": "^5.0.3"
   },
   "devDependencies": {
-    "@yoursunny/xo-config": "^0.33.0"
+    "@yoursunny/xo-config": "^0.34.0"
   }
 }

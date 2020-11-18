@@ -3,9 +3,9 @@ import { Segment, Version } from "@ndn/naming-convention1";
 import { Name } from "@ndn/packet";
 import { fetch, RttEstimator, TcpCubic } from "@ndn/segmented-object";
 import { fromUtf8 } from "@ndn/tlv";
-import { posix as path } from "path";
-import pRetry from "p-retry";
 import m3u8 from "m3u8-parser";
+import pRetry from "p-retry";
+import { posix as path } from "path"; // eslint-disable-line unicorn/import-style
 
 import { store } from "./store.js";
 
