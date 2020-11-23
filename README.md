@@ -3,7 +3,7 @@
 This program allows establishing a mirror site of [NDN video service](https://github.com/chavoosh/ndn-mongo-fileserver).
 It can follow HLS playlist structure and download all Data packets of a video, and then serve them from a NDNts repo.
 
-## Installation and Usage
+## Installation
 
 You should install this program in an unprivileged account.
 
@@ -30,17 +30,30 @@ You should install this program in an unprivileged account.
    * The signing key should be stored in a NDNts KeyChain, not in ndn-cxx KeyChain.
    * Enter KeyChain location and certificate name in `.env`.
 
-To download a video:
+## Usage
 
 ```bash
-node ./src/fetch.js /ndn/web/video/NDNts_NDNcomm2020/hls/playlist.m3u8
-```
+PREFIX=/ndn/web/video/NDNts_NDNcomm2020
+PLAYLIST=$PREFIX/hls/playlist.m3u8
 
-To start the producer:
+# download a video
+npm start -- fetch --playlist $PLAYLIST
 
-```bash
-node ./src/serve.js
+# start the producer
+npm start -- serve
+
+# list stored packets
+npm start -- list
+
+# export packets to DataTape
+npm start -- export --prefix $PREFIX > video.dtar
+
+# delete packets by prefix
+npm start -- delete --prefix $PREFIX
+
+# import packets from DataTape
+npm start -- import < video.dtar
 ```
 
 NDNts repo is based on LevelDB, which is non-thread-safe.
-Thus, you must stop the producer when downloading, and you can only download one video at a time.
+Thus, you can only run one command at a time.

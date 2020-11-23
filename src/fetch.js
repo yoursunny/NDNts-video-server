@@ -85,12 +85,40 @@ async function downloadFile(filename) {
   fetchOptions.estimatedFinalSegNum = count;
 }
 
-(async () => {
-  await openUplinks();
-
-  const playlist = process.argv[2];
-  for await (const filename of listFiles(playlist)) {
-    console.log("FILE", filename);
-    await downloadFile(filename);
+/** @typedef { { playlist: string } } FetchArgs */
+/** @type {import("yargs").CommandModule<{}, FetchArgs>} */
+export class FetchCommand {
+  constructor() {
+    this.command = "fetch";
+    this.describe = "fetch video from playlist";
   }
-})().catch(console.error).finally(closeUplinks);
+
+  /**
+   * @param {import("yargs").Argv<{}>} argv
+   * @returns {import("yargs").Argv<FetchArgs>}
+   */
+  builder(argv) {
+    return argv
+      .option("playlist", {
+        desc: "playlist name prefix",
+        type: "string",
+        demandOption: true,
+      });
+  }
+
+  /**
+   * @param {import("yargs").Arguments<FetchArgs>} args
+   */
+  async handler(args) {
+    const { playlist } = args;
+    await openUplinks();
+    try {
+      for await (const filename of listFiles(playlist)) {
+        console.log("FILE", filename);
+        await downloadFile(filename);
+      }
+    } finally {
+      closeUplinks();
+    }
+  }
+}
