@@ -16,6 +16,7 @@
     "@ndn/repo-api": "https://ndnts-nightly.ndn.today/repo-api.tgz",
     "@ndn/segmented-object": "https://ndnts-nightly.ndn.today/segmented-object.tgz",
     "@ndn/tlv": "https://ndnts-nightly.ndn.today/tlv.tgz",
+    "@nodelib/fs.walk": "^1.2.4",
     "@strattadb/environment": "^8.0.1",
     "dotenv": "^8.2.0",
     "hard-rejection": "^2.1.0",
