@@ -9,50 +9,56 @@ import { env } from "./env.js";
 
 export const store = new DataStore(leveldown(env.repoPath));
 
-/** @type {import("yargs").CommandModule} */
+/** @typedef { { prefix: string } } PrefixArg */
+
+/**
+ * @template {boolean} demand
+ * @param {demand} demandOption
+ * @returns {import("yargs").CommandBuilder<{}, demand extends true ? PrefixArg : Partial<PrefixArg>>}
+ */
+function makePrefixBuilder(demandOption) {
+  return /** @returns {any} */ (argv) =>
+    argv
+      .option("prefix", {
+        desc: "packet name prefix",
+        type: "string",
+        demandOption,
+      });
+}
+
+/** @type {import("yargs").CommandModule<{}, Partial<PrefixArg>>} */
 export class ListCommand {
   constructor() {
     this.command = "list";
     this.describe = "list stored packets";
+    this.builder = makePrefixBuilder(true);
   }
 
-  async handler() {
-    for await (const name of store.listNames()) {
+  /** @param {import("yargs").Arguments<PrefixArg>} args */
+  async handler(args) {
+    const { prefix } = args;
+    const namePrefix = prefix ? new Name(prefix) : undefined;
+    for await (const name of store.listNames(namePrefix)) {
       stdout.write(`${name}\n`);
     }
   }
 }
 
-/** @typedef { { prefix: string } } PrefixArg */
 /** @type {import("yargs").CommandModule<{}, PrefixArg>} */
 export class DeleteCommand {
   constructor() {
     this.command = "delete";
     this.describe = "delete packets of given prefix";
+    this.builder = makePrefixBuilder(true);
   }
 
-  /**
-   * @param {import("yargs").Argv<{}>} argv
-   * @returns {import("yargs").Argv<PrefixArg>}
-   */
-  builder(argv) {
-    return argv
-      .option("prefix", {
-        desc: "packet name prefix",
-        type: "string",
-        demandOption: true,
-      });
-  }
-
-  /**
-   * @param {import("yargs").Arguments<PrefixArg>} args
-   */
+  /** @param {import("yargs").Arguments<PrefixArg>} args */
   handler(args) {
     const { prefix } = args;
     return pipeline(
       () => store.listNames(new Name(prefix)),
       batch(64),
-      tap((b) => store.delete(...b)),
+      tap((/** @type {Name[]} */b) => store.delete(...b)),
       consume,
     );
   }
@@ -63,24 +69,10 @@ export class ExportCommand {
   constructor() {
     this.command = "export";
     this.describe = "export packets to DataTape (stdout)";
+    this.builder = makePrefixBuilder(true);
   }
 
-  /**
-   * @param {import("yargs").Argv<{}>} argv
-   * @returns {import("yargs").Argv<PrefixArg>}
-   */
-  builder(argv) {
-    return argv
-      .option("prefix", {
-        desc: "packet name prefix",
-        type: "string",
-        demandOption: true,
-      });
-  }
-
-  /**
-   * @param {import("yargs").Arguments<PrefixArg>} args
-   */
+  /** @param {import("yargs").Arguments<PrefixArg>} args */
   async handler(args) {
     const { prefix } = args;
     const tape = new DataTape(stdout);

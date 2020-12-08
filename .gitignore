@@ -1,5 +1,6 @@
 /*.out
 /.env
+/.vscode
 /data/
 /ecosystem.config.js
 /package-lock.json

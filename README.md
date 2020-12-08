@@ -57,7 +57,7 @@ VIDEO_TEMP=/tmp/video-sample
 VIDEO_PREFIX=/yoursunny/video/sample
 
 # encode, package, and add a local video
-./encode.sh $VIDEO_FILE $VIDEO_TEMP vp9
+nice ./encode.sh $VIDEO_FILE $VIDEO_TEMP vp9
 npm start -- add --prefix $VIDEO_PREFIX --path $VIDEO_TEMP
 
 # start the producer

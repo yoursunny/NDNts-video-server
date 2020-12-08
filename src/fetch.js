@@ -79,9 +79,9 @@ async function downloadFile(filename) {
 
   const {
     rtte: { sRtt, rto },
-    ca: { cwnd, wMax, ssthresh },
+    ca: { cwnd },
   } = fetchOptions;
-  console.log("STAT", `count ${count}, srtt ${Math.round(sRtt)} ms, rto ${Math.round(rto)} ms, cwnd ${Math.round(cwnd)}, wMax ${Math.round(wMax)}, ssthresh ${Math.round(ssthresh)}`);
+  console.log("STAT", `count ${count}, srtt ${Math.round(sRtt)} ms, rto ${Math.round(rto)} ms, cwnd ${Math.round(cwnd)}`);
   fetchOptions.estimatedFinalSegNum = count;
 }
 

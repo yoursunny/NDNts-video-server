@@ -31,11 +31,11 @@ X264STREAMS=()
 
 for R in "${!RESOLUTIONS[@]}"; do
   if [[ ${#VP9STREAMS[@]} -eq 0 ]]; then
-    VP9STREAMS+=('in='$INTERMEDIATE/$R'.webm,stream=audio,init_segment='$OUTPUT/'audio_init.webm,segment_template='$OUTPUT/'audio_$Number%08d$.webm')
-    X264STREAMS+=('in='$INTERMEDIATE/$R'.mp4,stream=audio,init_segment='$OUTPUT/'audio_init.mp4,segment_template='$OUTPUT/'audio_$Number%08d$.m4s')
+    VP9STREAMS+=('in='$INTERMEDIATE/$R'.webm,stream=audio,init_segment='$OUTPUT'/audio/init.webm,segment_template='$OUTPUT'/audio/$Number%08d$.webm')
+    X264STREAMS+=('in='$INTERMEDIATE/$R'.mp4,stream=audio,init_segment='$OUTPUT'/audio/init.mp4,segment_template='$OUTPUT'/audio/$Number%08d$.m4s')
   fi
-  VP9STREAMS+=('in='$INTERMEDIATE/$R'.webm,stream=video,init_segment='$OUTPUT/$R'_init.webm,segment_template='$OUTPUT/$R'_$Number%08d$.webm')
-  X264STREAMS+=('in='$INTERMEDIATE/$R'.mp4,stream=video,init_segment='$OUTPUT/$R'_init.mp4,segment_template='$OUTPUT/$R'_$Number%08d$.m4s')
+  VP9STREAMS+=('in='$INTERMEDIATE/$R'.webm,stream=video,init_segment='$OUTPUT/$R'/init.webm,segment_template='$OUTPUT/$R'/$Number%08d$.webm')
+  X264STREAMS+=('in='$INTERMEDIATE/$R'.mp4,stream=video,init_segment='$OUTPUT/$R'/init.mp4,segment_template='$OUTPUT/$R'/$Number%08d$.m4s')
 
   R_TOKENS=(${RESOLUTIONS[$R]})
   VP9BITRATE=${R_TOKENS[0]}

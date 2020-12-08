@@ -15,6 +15,7 @@ async function saveFile(filename, prefix) {
   const packets = DataProducer.listData(src, prefix.append(Version, 1),
     { segmentNumConvention: Segment });
   await store.insert(packets);
+  src.close();
 }
 
 /** @typedef { { prefix: string, path: string } } AddArgs */
@@ -49,7 +50,10 @@ export class AddCommand {
   async handler(args) {
     const prefix = new Name(args.prefix);
     const root = path.resolve(args.path);
-    for await (const entry of fsWalk.walkStream(root)) {
+    const files = fsWalk.walkStream(root, {
+      entryFilter: ({ dirent }) => dirent.isFile(),
+    });
+    for await (const entry of files) {
       const filename = path.resolve(entry.path);
       const suffix = path.relative(root, entry.path).split(path.sep);
       await saveFile(filename, prefix.append(...suffix));

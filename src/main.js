@@ -6,7 +6,7 @@ import { FetchCommand } from "./fetch.js";
 import { ServeCommand } from "./serve.js";
 import { DeleteCommand, ExportCommand, ImportCommand, ListCommand } from "./store.js";
 
-yargs()
+(/** @type {import("yargs").Argv} */(/** @type {unknown} */(yargs())))
   .scriptName("ivoosh-mirror")
   .command(new FetchCommand())
   .command(new AddCommand())
