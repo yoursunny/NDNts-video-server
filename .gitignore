@@ -1,7 +1,8 @@
-data/
-.env
+/*.out
+/.env
+/data/
+/ecosystem.config.js
+/package-lock.json
+/pnpm-lock.yaml
+/profile.data
 node_modules/
-*.out
-package-lock.json
-pnpm-lock.yaml
-profile.data

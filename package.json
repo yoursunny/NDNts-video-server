@@ -1,6 +1,4 @@
 {
-  "name": "@yoursunny/ivoosh-mirror",
-  "version": "0.0.0",
   "private": true,
   "scripts": {
     "lint": "xo --fix",
@@ -17,7 +15,7 @@
     "@ndn/segmented-object": "https://ndnts-nightly.ndn.today/segmented-object.tgz",
     "@ndn/tlv": "https://ndnts-nightly.ndn.today/tlv.tgz",
     "@nodelib/fs.walk": "^1.2.4",
-    "@strattadb/environment": "^8.0.1",
+    "@strattadb/environment": "^8.0.2",
     "dotenv": "^8.2.0",
     "hard-rejection": "^2.1.0",
     "leveldown": "^5.6.0",
@@ -25,7 +23,7 @@
     "p-retry": "^4.2.0",
     "stdout-stream": "^1.4.1",
     "streaming-iterables": "^5.0.3",
-    "yargs": "^16.1.1"
+    "yargs": "^16.2.0"
   },
   "devDependencies": {
     "@yoursunny/xo-config": "^0.34.0"
