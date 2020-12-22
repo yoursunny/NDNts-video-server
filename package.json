@@ -10,6 +10,7 @@
     "@ndn/cli-common": "https://ndnts-nightly.ndn.today/cli-common.tgz",
     "@ndn/endpoint": "https://ndnts-nightly.ndn.today/endpoint.tgz",
     "@ndn/naming-convention1": "https://ndnts-nightly.ndn.today/naming-convention1.tgz",
+    "@ndn/naming-convention2": "https://ndnts-nightly.ndn.today/naming-convention2.tgz",
     "@ndn/packet": "https://ndnts-nightly.ndn.today/packet.tgz",
     "@ndn/repo": "https://ndnts-nightly.ndn.today/repo.tgz",
     "@ndn/repo-api": "https://ndnts-nightly.ndn.today/repo-api.tgz",
@@ -27,9 +28,9 @@
     "yargs": "^16.2.0"
   },
   "devDependencies": {
-    "@types/node": "^14.14.10",
-    "@types/yargs": "^15.0.11",
-    "@yoursunny/xo-config": "^0.34.0",
-    "typescript": "^4.1.2"
+    "@types/node": "^14.14.14",
+    "@types/yargs": "^15.0.12",
+    "@yoursunny/xo-config": "^0.36.1",
+    "typescript": "^4.1.3"
   }
 }

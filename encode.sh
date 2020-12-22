@@ -20,9 +20,12 @@ FFMPEG=ffmpeg
 PACKAGER=/usr/local/bin/shaka-packager
 GOP=30
 declare -A RESOLUTIONS
-RESOLUTIONS[360]='360k 600k baseline 3.0'
-RESOLUTIONS[480]='500k 1000k main 3.1'
-RESOLUTIONS[720]='1500k 3000k main 4.0'
+RESOLUTIONS[240]='150k 300k baseline 2.0'
+RESOLUTIONS[360]='276k 600k baseline 3.0'
+RESOLUTIONS[480]='512k 1000k main 3.1'
+RESOLUTIONS[720]='1024k 3000k main 4.0'
+# VP9 https://developers.google.com/media/vp9/settings/vod
+# x264 https://github.com/chavoosh/ndn-mongo-fileserver/blob/0d1904d8e59851e90de35a996f3e2cf34d81d5e7/scripts/video/transcoder.sh
 
 mkdir -p $OUTPUT $INTERMEDIATE
 
@@ -51,7 +54,7 @@ for R in "${!RESOLUTIONS[@]}"; do
       -y $INTERMEDIATE/$R.webm
   elif [[ $FORMAT == 'x264' ]] && ! [[ -f $INTERMEDIATE/$R.mp4 ]]; then
     $FFMPEG -i $INPUT -c:a copy -vf scale=-2:$R -c:v libx264 \
-      -profile:v $PROFILE -level:v $LEVEL \
+      -profile:v $X264PROFILE -level:v $X264LEVEL \
       -x264-params scenecut=0:open_gop=0:min-keyint=$GOP:keyint=$GOP \
       -minrate $X264BITRATE -maxrate $X264BITRATE -bufsize $X264BITRATE -b:v $X264BITRATE \
       -y $INTERMEDIATE/$R.mp4

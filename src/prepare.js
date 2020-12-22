@@ -1,18 +1,19 @@
-import { Segment, Version } from "@ndn/naming-convention1";
+import { Segment, Version } from "@ndn/naming-convention2";
 import { Name } from "@ndn/packet";
+import { DataTape } from "@ndn/repo-api";
 import { DataProducer, FileChunkSource } from "@ndn/segmented-object";
 import * as fsWalk from "@nodelib/fs.walk";
 import path from "path";
-
-import { store } from "./store.js";
+import stdout from "stdout-stream";
 
 /**
+ * @param {import("@ndn/repo-api").DataStore.Insert} store
  * @param {string} filename
  * @param {Name} prefix
  */
-async function saveFile(filename, prefix) {
+async function saveFile(store, filename, prefix) {
   const src = new FileChunkSource(filename, { chunkSize: 7777 });
-  const packets = DataProducer.listData(src, prefix.append(Version, 1),
+  const packets = DataProducer.listData(src, prefix,
     { segmentNumConvention: Segment });
   await store.insert(packets);
   src.close();
@@ -20,10 +21,10 @@ async function saveFile(filename, prefix) {
 
 /** @typedef { { prefix: string, path: string } } AddArgs */
 /** @type {import("yargs").CommandModule<{}, AddArgs>} */
-export class AddCommand {
+export class PrepareCommand {
   constructor() {
-    this.command = "add";
-    this.describe = "add video from filesystem directory";
+    this.command = "prepare";
+    this.describe = "prepare video from filesystem directory to DataTape (stdout)";
   }
 
   /**
@@ -48,7 +49,9 @@ export class AddCommand {
    * @param {import("yargs").Arguments<AddArgs>} args
    */
   async handler(args) {
+    const tape = new DataTape(stdout);
     const prefix = new Name(args.prefix);
+    const versionComponent = Version.create(Date.now());
     const root = path.resolve(args.path);
     const files = fsWalk.walkStream(root, {
       entryFilter: ({ dirent }) => dirent.isFile(),
@@ -56,7 +59,8 @@ export class AddCommand {
     for await (const entry of files) {
       const filename = path.resolve(entry.path);
       const suffix = path.relative(root, entry.path).split(path.sep);
-      await saveFile(filename, prefix.append(...suffix));
+      await saveFile(tape, filename, prefix.append(...suffix, versionComponent));
     }
+    await tape.close();
   }
 }

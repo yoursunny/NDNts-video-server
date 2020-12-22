@@ -1,15 +1,15 @@
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 
-import { AddCommand } from "./add.js";
 import { FetchCommand } from "./fetch.js";
+import { PrepareCommand } from "./prepare.js";
 import { ServeCommand } from "./serve.js";
 import { DeleteCommand, ExportCommand, ImportCommand, ListCommand } from "./store.js";
 
 (/** @type {import("yargs").Argv} */(/** @type {unknown} */(yargs())))
-  .scriptName("ivoosh-mirror")
+  .scriptName("NDNts-video")
   .command(new FetchCommand())
-  .command(new AddCommand())
+  .command(new PrepareCommand())
   .command(new ServeCommand())
   .command(new ListCommand())
   .command(new DeleteCommand())

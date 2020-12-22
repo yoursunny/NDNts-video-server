@@ -56,12 +56,12 @@ VIDEO_FILE=$HOME/sample.mp4
 VIDEO_TEMP=/tmp/video-sample
 VIDEO_PREFIX=/yoursunny/video/sample
 
-# encode, package, and add a local video
+# encode, package, and prepare a local video as DataTape
 nice ./encode.sh $VIDEO_FILE $VIDEO_TEMP vp9
-npm start -- add --prefix $VIDEO_PREFIX --path $VIDEO_TEMP
+npm start -- prepare --prefix $VIDEO_PREFIX --path $VIDEO_TEMP > video.dtar
 
-# start the producer
-npm start -- serve
+# import packets from DataTape
+npm start -- import < video.dtar
 
 # list stored packets
 npm start -- list
@@ -72,8 +72,8 @@ npm start -- export --prefix $PREFIX > video.dtar
 # delete packets by prefix
 npm start -- delete --prefix $PREFIX
 
-# import packets from DataTape
-npm start -- import < video.dtar
+# start the producer
+npm start -- serve
 ```
 
 You can run the producer as a service using [pm2](https://pm2.keymetrics.io/).
