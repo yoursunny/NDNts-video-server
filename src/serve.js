@@ -2,8 +2,7 @@ import { openUplinks } from "@ndn/cli-common";
 import { Name } from "@ndn/packet";
 import { PrefixRegStatic, RepoProducer } from "@ndn/repo";
 
-import { env } from "./env.js";
-import { store } from "./store.js";
+import { env, openStore } from "./env.js";
 
 /** @type {import("yargs").CommandModule} */
 export class ServeCommand {
@@ -14,6 +13,7 @@ export class ServeCommand {
 
   async handler() {
     await openUplinks();
+    const store = openStore();
 
     RepoProducer.create(store, {
       reg: PrefixRegStatic(...env.prefixes.map((uri) => new Name(uri))),

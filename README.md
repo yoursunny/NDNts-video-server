@@ -58,22 +58,22 @@ VIDEO_PREFIX=/yoursunny/video/sample
 
 # encode, package, and prepare a local video as DataTape
 nice ./encode.sh $VIDEO_FILE $VIDEO_TEMP vp9
-npm start -- prepare --prefix $VIDEO_PREFIX --path $VIDEO_TEMP > video.dtar
+node ./cli.cjs prepare --prefix $VIDEO_PREFIX --path $VIDEO_TEMP > video.dtar
 
 # import packets from DataTape
-npm start -- import < video.dtar
+node ./cli.cjs import < video.dtar
 
 # list stored packets
-npm start -- list
+node ./cli.cjs list
 
 # export packets to DataTape
-npm start -- export --prefix $PREFIX > video.dtar
+node ./cli.cjs export --prefix $PREFIX > video.dtar
 
 # delete packets by prefix
-npm start -- delete --prefix $PREFIX
+node ./cli.cjs delete --prefix $PREFIX
 
 # start the producer
-npm start -- serve
+node ./cli.cjs serve
 ```
 
 You can run the producer as a service using [pm2](https://pm2.keymetrics.io/).
@@ -89,10 +89,10 @@ It can follow HLS playlist structure and download all Data packets of a video.
 
 ```bash
 IVISA_PREFIX=/ndn/web/video/NDNts_NDNcomm2020
-IVISA_PLAYLIST=$PREFIX/hls/playlist.m3u8
+IVISA_PLAYLIST=$IVISA_PREFIX/hls/playlist.m3u8
 
 # download a video from https://ivisa.named-data.net/
-npm start -- fetch --playlist $IVISA_PLAYLIST
+node ./cli.cjs fetch --playlist $IVISA_PLAYLIST > video.dtar
 ```
 
 The fetch command does not support DASH format, so that it cannot fetch a video prepared by `encode.sh`.

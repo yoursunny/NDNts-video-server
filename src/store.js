@@ -1,13 +1,9 @@
 import { Name } from "@ndn/packet";
-import { DataStore } from "@ndn/repo";
 import { copy, DataTape } from "@ndn/repo-api";
-import leveldown from "leveldown";
 import stdout from "stdout-stream";
 import { batch, consume, pipeline, tap } from "streaming-iterables";
 
-import { env } from "./env.js";
-
-export const store = new DataStore(leveldown(env.repoPath));
+import { openStore } from "./env.js";
 
 /** @typedef { { prefix: string } } PrefixArg */
 
@@ -38,9 +34,11 @@ export class ListCommand {
   async handler(args) {
     const { prefix } = args;
     const namePrefix = prefix ? new Name(prefix) : undefined;
+    const store = openStore();
     for await (const name of store.listNames(namePrefix)) {
       stdout.write(`${name}\n`);
     }
+    await store.close();
   }
 }
 
@@ -53,14 +51,16 @@ export class DeleteCommand {
   }
 
   /** @param {import("yargs").Arguments<PrefixArg>} args */
-  handler(args) {
+  async handler(args) {
     const { prefix } = args;
-    return pipeline(
+    const store = openStore();
+    await pipeline(
       () => store.listNames(new Name(prefix)),
       batch(64),
       tap((/** @type {Name[]} */b) => store.delete(...b)),
       consume,
     );
+    await store.close();
   }
 }
 
@@ -76,8 +76,9 @@ export class ExportCommand {
   async handler(args) {
     const { prefix } = args;
     const tape = new DataTape(stdout);
+    const store = openStore();
     await copy(store, new Name(prefix), tape);
-    await tape.close();
+    await Promise.all([tape.close(), store.close()]);
   }
 }
 
@@ -90,7 +91,8 @@ export class ImportCommand {
 
   async handler() {
     const tape = new DataTape(process.stdin);
+    const store = openStore();
     await copy(tape, store);
-    await tape.close();
+    await Promise.all([tape.close(), store.close()]);
   }
 }

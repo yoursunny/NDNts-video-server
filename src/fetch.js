@@ -1,13 +1,14 @@
 import { closeUplinks, openUplinks } from "@ndn/cli-common";
 import { Segment, Version } from "@ndn/naming-convention1";
 import { Name } from "@ndn/packet";
+import { DataTape } from "@ndn/repo-api";
 import { fetch, RttEstimator, TcpCubic } from "@ndn/segmented-object";
 import { fromUtf8 } from "@ndn/tlv";
 import m3u8 from "m3u8-parser";
 import pRetry from "p-retry";
 import { posix as path } from "path"; // eslint-disable-line unicorn/import-style
-
-import { store } from "./store.js";
+import stdout from "stdout-stream";
+import { collect } from "streaming-iterables";
 
 const fetchOptions = {
   rtte: new RttEstimator({ maxRto: 10000 }),
@@ -56,17 +57,14 @@ async function* listFiles(filename) {
 }
 
 /**
+ * @param {import("@ndn/repo-api").DataStore.Insert} store
  * @param {string} filename
  */
-async function downloadFile(filename) {
+async function downloadFile(store, filename) {
   const name = new Name(filename).append(Version, 1);
   const count = await pRetry(async () => {
     const fetchResult = fetch(name, fetchOptions);
-    const tx = store.tx();
-    for await (const data of fetchResult.unordered()) {
-      tx.insert(data);
-    }
-    await tx.commit();
+    await store.insert(await collect(fetchResult.unordered()));
     return fetchResult.count;
   }, {
     retries: 1000,
@@ -81,7 +79,7 @@ async function downloadFile(filename) {
     rtte: { sRtt, rto },
     ca: { cwnd },
   } = fetchOptions;
-  console.log("STAT", `count ${count}, srtt ${Math.round(sRtt)} ms, rto ${Math.round(rto)} ms, cwnd ${Math.round(cwnd)}`);
+  process.stderr.write(`STAT count ${count}, srtt ${Math.round(sRtt)} ms, rto ${Math.round(rto)} ms, cwnd ${Math.round(cwnd)}\n`);
   fetchOptions.estimatedFinalSegNum = count;
 }
 
@@ -111,11 +109,12 @@ export class FetchCommand {
    */
   async handler(args) {
     const { playlist } = args;
+    const tape = new DataTape(stdout);
     await openUplinks();
     try {
       for await (const filename of listFiles(playlist)) {
-        console.log("FILE", filename);
-        await downloadFile(filename);
+        process.stderr.write(`FILE ${filename}\n`);
+        await downloadFile(tape, filename);
       }
     } finally {
       closeUplinks();

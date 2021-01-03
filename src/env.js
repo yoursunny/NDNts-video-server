@@ -1,5 +1,7 @@
+import { DataStore } from "@ndn/repo";
 import strattadbEnvironment from "@strattadb/environment";
 import dotenv from "dotenv";
+import leveldown from "leveldown";
 const { makeEnv, parsers } = strattadbEnvironment;
 
 dotenv.config();
@@ -18,3 +20,7 @@ export const env = makeEnv({
     required: true,
   },
 });
+
+export function openStore() {
+  return new DataStore(leveldown(env.repoPath));
+}

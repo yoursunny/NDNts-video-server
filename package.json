@@ -3,7 +3,6 @@
   "scripts": {
     "lint": "xo --fix",
     "pnpm-install": "pnpm install --shamefully-hoist",
-    "start": "node ./cli.cjs",
     "typecheck": "tsc"
   },
   "dependencies": {
@@ -16,7 +15,7 @@
     "@ndn/repo-api": "https://ndnts-nightly.ndn.today/repo-api.tgz",
     "@ndn/segmented-object": "https://ndnts-nightly.ndn.today/segmented-object.tgz",
     "@ndn/tlv": "https://ndnts-nightly.ndn.today/tlv.tgz",
-    "@nodelib/fs.walk": "^1.2.4",
+    "@nodelib/fs.walk": "^1.2.6",
     "@strattadb/environment": "^8.0.2",
     "dotenv": "^8.2.0",
     "hard-rejection": "^2.1.0",
@@ -28,7 +27,7 @@
     "yargs": "^16.2.0"
   },
   "devDependencies": {
-    "@types/node": "^14.14.14",
+    "@types/node": "^14.14.19",
     "@types/yargs": "^15.0.12",
     "@yoursunny/xo-config": "^0.36.1",
     "typescript": "^4.1.3"
