@@ -10,6 +10,8 @@ import { posix as path } from "path"; // eslint-disable-line unicorn/import-styl
 import stdout from "stdout-stream";
 import { collect } from "streaming-iterables";
 
+const logger = new console.Console(process.stderr);
+
 const fetchOptions = {
   rtte: new RttEstimator({ maxRto: 10000 }),
   ca: new TcpCubic(),
@@ -69,7 +71,7 @@ async function downloadFile(store, filename) {
   }, {
     retries: 1000,
     onFailedAttempt: (err) => {
-      console.warn(err);
+      logger.warn(err);
       fetchOptions.rtte = new RttEstimator({ maxRto: 10000 });
       fetchOptions.ca = new TcpCubic();
     },
@@ -79,7 +81,7 @@ async function downloadFile(store, filename) {
     rtte: { sRtt, rto },
     ca: { cwnd },
   } = fetchOptions;
-  process.stderr.write(`STAT count ${count}, srtt ${Math.round(sRtt)} ms, rto ${Math.round(rto)} ms, cwnd ${Math.round(cwnd)}\n`);
+  logger.log("STAT", `count ${count}, srtt ${Math.round(sRtt)} ms, rto ${Math.round(rto)} ms, cwnd ${Math.round(cwnd)}`);
   fetchOptions.estimatedFinalSegNum = count;
 }
 
@@ -113,7 +115,7 @@ export class FetchCommand {
     await openUplinks();
     try {
       for await (const filename of listFiles(playlist)) {
-        process.stderr.write(`FILE ${filename}\n`);
+        logger.log("FILE", filename);
         await downloadFile(tape, filename);
       }
     } finally {
