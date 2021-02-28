@@ -39,15 +39,16 @@ You should install this program in an unprivileged account.
    * The signing key should be stored in a NDNts KeyChain, not in ndn-cxx KeyChain.
    * Enter KeyChain location and certificate name in `.env`.
 
-6. Install FFmpeg and Shaka Packager:
+6. Install FFmpeg and Shaka Packager: (only needed for encoding)
 
    ```bash
    sudo apt install ffmpeg
-   curl -sL https://github.com/google/shaka-packager/releases/download/v2.4.3/packager-linux | \
+   curl -sfL https://github.com/google/shaka-packager/releases/download/v2.4.3/packager-linux | \
      sudo install /dev/stdin /usr/local/bin/shaka-packager
    ```
 
-   This is not needed on a mirror server that does not encode from video files.
+   Alternatively, you can specify `USE_DOCKER=1` environ when invoking `encode.sh` script to use Docker images of these programs.
+   You can additionally specify `DOCKER_LIMITS="--cpus 0.5 --memory 512MB"` environ to set CPU and RAM limits.
 
 ## Usage
 

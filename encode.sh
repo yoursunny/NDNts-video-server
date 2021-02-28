@@ -1,6 +1,5 @@
 #!/bin/bash
-set -e
-set -o pipefail
+set -eo pipefail
 
 usage() {
   echo './encode.sh INPUT.mp4 OUTPUT-DIR [vp9|x264]' >/dev/stderr
@@ -11,13 +10,17 @@ if [[ -z $2 ]]; then
   usage
 fi
 
-INPUT=$1
-OUTPUT=$2
+INPUT=$(readlink -f $1)
+OUTPUT=$(readlink -f $2)
 FORMAT=${3:-vp9}
 INTERMEDIATE=/tmp/$(basename $INPUT | awk -F. -vOFS=. '{ NF-=1; print }')
 
 FFMPEG=ffmpeg
 PACKAGER=/usr/local/bin/shaka-packager
+if [[ ${USE_DOCKER} -eq 1 ]]; then
+  FFMPEG="docker run --rm -v ${INPUT}:${INPUT} -v ${INTERMEDIATE}:${INTERMEDIATE} ${DOCKER_LIMITS} linuxserver/ffmpeg"
+  PACKAGER="docker run --rm -u $(id -u):$(id -g) -v ${INTERMEDIATE}:${INTERMEDIATE} -v ${OUTPUT}:${OUTPUT} ${DOCKER_LIMITS} google/shaka-packager packager"
+fi
 GOP=30
 declare -A RESOLUTIONS
 RESOLUTIONS[240]='150k 300k baseline 2.0'
