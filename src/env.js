@@ -1,10 +1,9 @@
+import "dotenv/config"; // eslint-disable-line import/no-unassigned-import
+
 import { DataStore } from "@ndn/repo";
 import strattadbEnvironment from "@strattadb/environment";
-import dotenv from "dotenv";
 import leveldown from "leveldown";
 const { makeEnv, parsers } = strattadbEnvironment;
-
-dotenv.config();
 
 export const env = makeEnv({
   repoPath: {

@@ -9,11 +9,11 @@ This project is built with [NDNts](https://yoursunny.com/p/NDNts/), Named Data N
 
 You should install this program in an unprivileged account.
 
-1. Install Node.js 14.x and `pnpm`:
+1. Install Node.js 16.x and `pnpm`:
 
    ```bash
    # see https://github.com/nvm-sh/nvm
-   nvm install 14
+   nvm install 16
 
    # only needed for development environment
    npm install -g pnpm
@@ -31,15 +31,13 @@ You should install this program in an unprivileged account.
    npm install --production
    ```
 
-4. Copy `sample.env` to `.env`.
-
-5. Generate a key and obtain a certificate for prefix registration.
+4. Generate a key and obtain a certificate for prefix registration.
 
    * You may use `@ndn/keychain-cli` package.
    * The signing key should be stored in a NDNts KeyChain, not in ndn-cxx KeyChain.
    * Enter KeyChain location and certificate name in `.env`.
 
-6. Install FFmpeg and Shaka Packager: (only needed for encoding)
+5. Install FFmpeg and Shaka Packager: (only needed for encoding)
 
    ```bash
    sudo apt install ffmpeg
@@ -65,7 +63,7 @@ node ./cli.cjs prepare --prefix $VIDEO_PREFIX --path $VIDEO_TEMP > video.dtar
 node ./cli.cjs import < video.dtar
 
 # list stored packets
-node ./cli.cjs list
+node ./cli.cjs list --prefix $PREFIX
 
 # export packets to DataTape
 node ./cli.cjs export --prefix $PREFIX > video.dtar
@@ -74,6 +72,7 @@ node ./cli.cjs export --prefix $PREFIX > video.dtar
 node ./cli.cjs delete --prefix $PREFIX
 
 # start the producer
+# modify .env REPO_PREFIXES to include prefixes of imported packets
 node ./cli.cjs serve
 ```
 
