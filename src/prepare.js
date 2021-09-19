@@ -3,7 +3,7 @@ import { Name } from "@ndn/packet";
 import { DataTape } from "@ndn/repo-api";
 import { DataProducer, FileChunkSource } from "@ndn/segmented-object";
 import * as fsWalk from "@nodelib/fs.walk";
-import path from "path";
+import path from "node:path";
 import stdout from "stdout-stream";
 
 /**
@@ -19,8 +19,8 @@ async function saveFile(store, filename, prefix) {
   src.close();
 }
 
-/** @typedef { { prefix: string, path: string } } AddArgs */
-/** @type {import("yargs").CommandModule<{}, AddArgs>} */
+/** @typedef { { prefix: string, path: string } } PrepareArgs */
+/** @type {import("yargs").CommandModule<{}, PrepareArgs>} */
 export class PrepareCommand {
   constructor() {
     this.command = "prepare";
@@ -29,7 +29,7 @@ export class PrepareCommand {
 
   /**
    * @param {import("yargs").Argv<{}>} argv
-   * @returns {import("yargs").Argv<AddArgs>}
+   * @returns {import("yargs").Argv<PrepareArgs>}
    */
   builder(argv) {
     return argv
@@ -46,7 +46,7 @@ export class PrepareCommand {
   }
 
   /**
-   * @param {import("yargs").Arguments<AddArgs>} args
+   * @param {import("yargs").Arguments<PrepareArgs>} args
    */
   async handler(args) {
     const tape = new DataTape(stdout);

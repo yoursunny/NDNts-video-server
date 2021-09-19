@@ -4,9 +4,10 @@ import { Name } from "@ndn/packet";
 import { DataTape } from "@ndn/repo-api";
 import { fetch, RttEstimator, TcpCubic } from "@ndn/segmented-object";
 import { fromUtf8 } from "@ndn/tlv";
+// @ts-expect-error
 import m3u8 from "m3u8-parser";
+import { posix as path } from "node:path";
 import pRetry from "p-retry";
-import { posix as path } from "path"; // eslint-disable-line unicorn/import-style
 import stdout from "stdout-stream";
 import { collect } from "streaming-iterables";
 
@@ -24,6 +25,7 @@ const fetchOptions = {
 
 /**
  * @param {string} filename
+ * @returns {AsyncGenerator<string>}
  */
 async function* listFiles(filename) {
   yield filename;

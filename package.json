@@ -2,7 +2,6 @@
   "private": true,
   "scripts": {
     "lint": "xo --fix",
-    "pnpm-install": "pnpm install --shamefully-hoist",
     "postinstall": "node postinstall.js",
     "typecheck": "tsc"
   },
@@ -16,21 +15,24 @@
     "@ndn/repo-api": "https://ndnts-nightly.ndn.today/repo-api.tgz",
     "@ndn/segmented-object": "https://ndnts-nightly.ndn.today/segmented-object.tgz",
     "@ndn/tlv": "https://ndnts-nightly.ndn.today/tlv.tgz",
-    "@nodelib/fs.walk": "^1.2.6",
+    "@nodelib/fs.walk": "^1.2.8",
     "@strattadb/environment": "^8.0.2",
     "dotenv": "^10.0.0",
     "hard-rejection": "^2.1.0",
-    "leveldown": "^6.0.1",
-    "m3u8-parser": "^4.5.2",
-    "p-retry": "^4.4.0",
+    "leveldown": "^6.0.2",
+    "m3u8-parser": "^4.7.0",
+    "p-retry": "^4.6.1",
     "stdout-stream": "^1.4.1",
     "streaming-iterables": "^6.0.0",
     "yargs": "^17.1.1"
   },
   "devDependencies": {
-    "@types/node": "^16.6.2",
+    "@types/leveldown": "^4.0.3",
+    "@types/node": "^16.9.3",
+    "@types/stdout-stream": "^1.4.0",
+    "@types/web": "^0.0.34",
     "@types/yargs": "^17.0.2",
-    "@yoursunny/xo-config": "^0.40.1",
-    "typescript": "~4.3.5"
+    "@yoursunny/xo-config": "^0.44.0",
+    "typescript": "~4.4.3"
   }
 }

@@ -27,10 +27,10 @@ export class ListCommand {
   constructor() {
     this.command = "list";
     this.describe = "list stored packets";
-    this.builder = makePrefixBuilder(true);
+    this.builder = makePrefixBuilder(false);
   }
 
-  /** @param {import("yargs").Arguments<PrefixArg>} args */
+  /** @param {import("yargs").Arguments<Partial<PrefixArg>>} args */
   async handler(args) {
     const { prefix } = args;
     const namePrefix = prefix ? new Name(prefix) : undefined;

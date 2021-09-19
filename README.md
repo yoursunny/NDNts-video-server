@@ -25,7 +25,7 @@ You should install this program in an unprivileged account.
 
    ```bash
    # development environment
-   npm run pnpm-install
+   pnpm install
 
    # production environment
    npm install --production

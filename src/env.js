@@ -3,6 +3,7 @@ import "dotenv/config"; // eslint-disable-line import/no-unassigned-import
 import { DataStore } from "@ndn/repo";
 import strattadbEnvironment from "@strattadb/environment";
 import leveldown from "leveldown";
+
 const { makeEnv, parsers } = strattadbEnvironment;
 
 export const env = makeEnv({
