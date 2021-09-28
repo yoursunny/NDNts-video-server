@@ -6,13 +6,15 @@ import * as fsWalk from "@nodelib/fs.walk";
 import path from "node:path";
 import stdout from "stdout-stream";
 
+import { chunkSize } from "./env.js";
+
 /**
  * @param {import("@ndn/repo-api").DataStore.Insert} store
  * @param {string} filename
  * @param {Name} prefix
  */
 async function saveFile(store, filename, prefix) {
-  const src = new FileChunkSource(filename, { chunkSize: 7777 });
+  const src = new FileChunkSource(filename, { chunkSize });
   const packets = DataProducer.listData(src, prefix,
     { segmentNumConvention: Segment });
   await store.insert(packets);

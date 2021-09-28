@@ -1,5 +1,6 @@
 import "dotenv/config"; // eslint-disable-line import/no-unassigned-import
 
+import { Name } from "@ndn/packet";
 import { DataStore } from "@ndn/repo";
 import strattadbEnvironment from "@strattadb/environment";
 import leveldown from "leveldown";
@@ -15,11 +16,13 @@ export const env = makeEnv({
   prefixes: {
     envVarName: "REPO_PREFIXES",
     parser: parsers.array({
-      parser: parsers.string,
+      parser: (uri) => new Name(uri),
     }),
     required: true,
   },
 });
+
+export const chunkSize = 7777;
 
 export function openStore() {
   return new DataStore(leveldown(env.repoPath));
