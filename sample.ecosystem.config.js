@@ -1,3 +1,5 @@
+/* eslint-disable camelcase */
+
 module.exports = {
   apps: [
     {
@@ -8,6 +10,8 @@ module.exports = {
         NODE_ENV: "production",
       },
       watch: false,
+      max_restarts: 1000,
+      restart_delay: 60000,
     },
   ],
 };
