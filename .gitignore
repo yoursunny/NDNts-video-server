@@ -3,7 +3,6 @@
 /.vscode
 /data/
 /ecosystem.config.js
-/package-lock.json
 /pnpm-lock.yaml
 /profile.data
 node_modules/

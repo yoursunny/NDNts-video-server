@@ -9,14 +9,11 @@ This project is built with [NDNts](https://yoursunny.com/p/NDNts/), Named Data N
 
 You should install this program in an unprivileged account.
 
-1. Install Node.js 16.x and `pnpm`:
+1. Install Node.js 18.x:
 
    ```bash
    # see https://github.com/nvm-sh/nvm
-   nvm install 16
-
-   # only needed for development environment
-   npm install -g pnpm
+   nvm install 18
    ```
 
 2. Clone this repository.
@@ -24,11 +21,7 @@ You should install this program in an unprivileged account.
 3. Install local dependencies:
 
    ```bash
-   # development environment
-   pnpm install
-
-   # production environment
-   npm install --production
+   corepack pnpm install
    ```
 
 4. Generate a key and obtain a certificate for prefix registration.
@@ -41,7 +34,7 @@ You should install this program in an unprivileged account.
 
    ```bash
    sudo apt install ffmpeg
-   curl -sfL https://github.com/google/shaka-packager/releases/download/v2.4.3/packager-linux | \
+   curl -fsfL https://github.com/google/shaka-packager/releases/download/v2.6.1/packager-linux-x64 | \
      sudo install /dev/stdin /usr/local/bin/shaka-packager
    ```
 

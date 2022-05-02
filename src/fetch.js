@@ -3,7 +3,7 @@ import { Segment, Version } from "@ndn/naming-convention1";
 import { Name } from "@ndn/packet";
 import { DataTape } from "@ndn/repo-api";
 import { fetch, RttEstimator, TcpCubic } from "@ndn/segmented-object";
-import { fromUtf8 } from "@ndn/tlv";
+import { fromUtf8 } from "@ndn/util";
 // @ts-expect-error
 import m3u8 from "m3u8-parser";
 import { posix as path } from "node:path";
