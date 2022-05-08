@@ -74,19 +74,3 @@ A sample `ecosystem.config.js` is provided.
 
 NDNts repo is based on LevelDB, which is non-thread-safe.
 Thus, you can only run one command at a time, and you must stop the service before running other commands.
-
-### Mirroring
-
-This program can fetch videos from [iViSA](https://ivisa.named-data.net/) and establish a mirror site.
-It can follow HLS playlist structure and download all Data packets of a video.
-
-```bash
-IVISA_PREFIX=/ndn/web/video/NDNts_NDNcomm2020
-IVISA_PLAYLIST=$IVISA_PREFIX/hls/playlist.m3u8
-
-# download a video from https://ivisa.named-data.net/
-node ./cli.cjs fetch --playlist $IVISA_PLAYLIST > video.dtar
-```
-
-The fetch command does not support DASH format, so that it cannot fetch a video prepared by `encode.sh`.
-However, you can export packets of a video to a DataTape, transfer the file to another server, and import the DataTape.

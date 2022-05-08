@@ -1,14 +1,12 @@
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 
-import { FetchCommand } from "./fetch.js";
 import { PrepareCommand } from "./prepare.js";
 import { ServeCommand } from "./serve.js";
 import { DeleteCommand, ExportCommand, ImportCommand, ListCommand } from "./store.js";
 
 yargs(hideBin(process.argv))
   .scriptName("NDNts-video")
-  .command(new FetchCommand())
   .command(new PrepareCommand())
   .command(new ServeCommand())
   .command(new ListCommand())

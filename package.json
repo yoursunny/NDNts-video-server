@@ -1,15 +1,14 @@
 {
   "private": true,
   "scripts": {
-    "lint": "xo --fix",
+    "lint": "xo-yoursunny --fix",
     "postinstall": "node postinstall.js",
     "typecheck": "tsc"
   },
-  "packageManager": "pnpm@7.0.0",
+  "packageManager": "pnpm@7.0.1",
   "dependencies": {
     "@ndn/cli-common": "https://ndnts-nightly.ndn.today/cli-common.tgz",
     "@ndn/endpoint": "https://ndnts-nightly.ndn.today/endpoint.tgz",
-    "@ndn/naming-convention1": "https://ndnts-nightly.ndn.today/naming-convention1.tgz",
     "@ndn/naming-convention2": "https://ndnts-nightly.ndn.today/naming-convention2.tgz",
     "@ndn/packet": "https://ndnts-nightly.ndn.today/packet.tgz",
     "@ndn/repo": "https://ndnts-nightly.ndn.today/repo.tgz",
@@ -21,8 +20,6 @@
     "dotenv": "^16.0.0",
     "hard-rejection": "^2.1.0",
     "leveldown": "^6.1.1",
-    "m3u8-parser": "^4.7.1",
-    "p-retry": "^5.1.1",
     "stdout-stream": "^1.4.1",
     "streaming-iterables": "^7.0.4",
     "yargs": "^17.4.1"
@@ -31,9 +28,8 @@
     "@types/leveldown": "^4.0.3",
     "@types/node": "^17.0.31",
     "@types/stdout-stream": "^1.4.0",
-    "@types/web": "^0.0.63",
     "@types/yargs": "^17.0.10",
-    "@yoursunny/xo-config": "^0.48.1",
+    "@yoursunny/xo-config": "^0.48.4",
     "typescript": "~4.6.4"
   }
 }
