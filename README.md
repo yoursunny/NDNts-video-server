@@ -30,7 +30,7 @@ You should install this program in an unprivileged account.
    * The signing key should be stored in a NDNts KeyChain, not in ndn-cxx KeyChain.
    * Enter KeyChain location and certificate name in `.env`.
 
-5. Install FFmpeg and Shaka Packager: (only needed for encoding)
+5. Install FFmpeg and Shaka Packager (only needed for encoding):
 
    ```bash
    sudo apt install ffmpeg
@@ -50,23 +50,23 @@ VIDEO_PREFIX=/yoursunny/video/sample
 
 # encode, package, and prepare a local video as DataTape
 nice ./encode.sh $VIDEO_FILE $VIDEO_TEMP vp9
-node ./cli.cjs prepare --prefix $VIDEO_PREFIX --path $VIDEO_TEMP > video.dtar
+corepack pnpm -s start prepare --prefix $VIDEO_PREFIX --path $VIDEO_TEMP > video.dtar
 
 # import packets from DataTape
-node ./cli.cjs import < video.dtar
+corepack pnpm -s start import < video.dtar
 
 # list stored packets
-node ./cli.cjs list --prefix $PREFIX
+corepack pnpm -s start list --prefix $PREFIX
 
 # export packets to DataTape
-node ./cli.cjs export --prefix $PREFIX > video.dtar
+corepack pnpm -s start export --prefix $PREFIX > video.dtar
 
 # delete packets by prefix
-node ./cli.cjs delete --prefix $PREFIX
+corepack pnpm -s start delete --prefix $PREFIX
 
 # start the producer
 # modify .env REPO_PREFIXES to include prefixes of imported packets
-node ./cli.cjs serve
+corepack pnpm -s start serve
 ```
 
 You can run the producer as a service using [pm2](https://pm2.keymetrics.io/).

@@ -1,4 +1,4 @@
-const fs = require("node:fs");
+import * as fs from "node:fs";
 
 if (!fs.existsSync(".env")) {
   fs.copyFileSync("sample.env", ".env");
