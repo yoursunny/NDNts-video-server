@@ -1,9 +1,10 @@
+import path from "node:path";
+
 import { Segment, Version } from "@ndn/naming-convention2";
 import { Name } from "@ndn/packet";
 import { DataTape } from "@ndn/repo-api";
 import { DataProducer, FileChunkSource } from "@ndn/segmented-object";
 import * as fsWalk from "@nodelib/fs.walk";
-import path from "node:path";
 import stdout from "stdout-stream";
 
 import { chunkSize } from "./env.js";

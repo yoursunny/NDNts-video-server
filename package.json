@@ -6,7 +6,7 @@
     "start": "node ./cli.cjs",
     "typecheck": "tsc"
   },
-  "packageManager": "pnpm@7.9.3",
+  "packageManager": "pnpm@7.21.0",
   "dependencies": {
     "@ndn/cli-common": "https://ndnts-nightly.ndn.today/cli-common.tgz",
     "@ndn/endpoint": "https://ndnts-nightly.ndn.today/endpoint.tgz",
@@ -18,19 +18,19 @@
     "@ndn/util": "https://ndnts-nightly.ndn.today/util.tgz",
     "@nodelib/fs.walk": "^1.2.8",
     "@strattadb/environment": "^8.0.2",
-    "dotenv": "^16.0.1",
+    "dotenv": "^16.0.3",
     "hard-rejection": "^2.1.0",
     "leveldown": "^6.1.1",
     "stdout-stream": "^2.0.0",
-    "streaming-iterables": "^7.0.4",
-    "yargs": "^17.5.1"
+    "streaming-iterables": "^7.1.0",
+    "yargs": "^17.6.2"
   },
   "devDependencies": {
     "@types/leveldown": "^4.0.3",
-    "@types/node": "^18.7.9",
+    "@types/node": "^18.11.18",
     "@types/stdout-stream": "^1.4.0",
-    "@types/yargs": "^17.0.11",
-    "@yoursunny/xo-config": "^0.50.0",
-    "typescript": "~4.7.4"
+    "@types/yargs": "^17.0.18",
+    "@yoursunny/xo-config": "^0.52.1",
+    "typescript": "~4.9.4"
   }
 }

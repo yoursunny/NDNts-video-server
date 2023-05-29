@@ -1,5 +1,9 @@
 # NDNts Adaptive Video Server
 
+**This repository is deprecated in favor of [NDNts-video/server](https://github.com/yoursunny/NDNts-video/tree/main/server)**.
+
+---
+
 NDNts adaptive video server is the server component for [NDNts Adaptive Video](https://github.com/yoursunny/NDNts-video) web application.
 This project is built with [NDNts](https://yoursunny.com/p/NDNts/), Named Data Networking libraries for the modern web.
 
@@ -73,4 +77,4 @@ You can run the producer as a service using [pm2](https://pm2.keymetrics.io/).
 A sample `ecosystem.config.js` is provided.
 
 NDNts repo is based on LevelDB, which is non-thread-safe.
-Thus, you can only run one command at a time, and you must stop the service before running other commands.
+Thus, you can only run one command at a time, and you must stop the producer before running other commands.
